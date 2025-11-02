@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Cleaner Test Page</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #4A90E2;
+      padding-bottom: 10px;
+    }
+    
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #4A90E2;
+    }
+    
+    h2 {
+      color: #4A90E2;
+      margin-top: 0;
+    }
+    
+    a {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #4A90E2;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px 10px 10px 0;
+      transition: background 0.3s;
+    }
+    
+    a:hover {
+      background: #357ABD;
+    }
+    
+    .url-display {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #666;
+      background: white;
+      padding: 8px;
+      border-radius: 4px;
+      margin-top: 5px;
+      word-break: break-all;
+    }
+    
+    .expected {
+      color: #27ae60;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    
+    .instructions {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+    
+    .instructions strong {
+      color: #856404;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛡️ Smart Link Cleaner - Test Page</h1>
+  
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ol>
+      <li>Make sure your extension is loaded in brave://extensions/</li>
+      <li>Open Developer Tools (F12) and go to Console tab</li>
+      <li>Click the extension icon to see statistics</li>
+      <li>Click each test link below and observe the results</li>
+      <li>Check the URL in your address bar after clicking</li>
+    </ol>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 1: Heavy Tracking Parameters (Google Analytics)</h2>
+    <p>This link has multiple Google Analytics tracking parameters that should be removed.</p>
+    
+    <a href="https://example.com/product?utm_source=newsletter&utm_medium=email&utm_campaign=summer2024&utm_content=header&utm_term=sale&productId=12345">
+      Click to Test Tracking Removal
+    </a>
+    
+    <div class="url-display">
+      Original: https://example.com/product?utm_source=newsletter&utm_medium=email&utm_campaign=summer2024&utm_content=header&utm_term=sale&productId=12345
+    </div>
+    
+    <div class="expected">
+      ✅ Expected Result: https://example.com/product?productId=12345
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Facebook Tracking (fbclid)</h2>
+    <p>Links shared from Facebook contain fbclid tracking parameters.</p>
+    
+    <a href="https://www.example.com/article?fbclid=IwAR3x8K2p9L4m5N6o7P&articleId=999">
+      Facebook Shared Link
+    </a>
+    
+    <div class="url-display">
+      Original: https://www.example.com/article?fbclid=IwAR3x8K2p9L4m5N6o7P&articleId=999
+    </div>
+    
+    <div class="expected">
+      ✅ Expected Result: https://www.example.com/article?articleId=999
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Clean Link (No Changes Expected)</h2>
+    <p>This link has no tracking parameters, so it should pass through unchanged.</p>
+    
+    <a href="https://example.com/page?id=123&sort=date">
+      Clean Link with Functional Parameters
+    </a>
+    
+    <div class="url-display">
+      Original: https://example.com/page?id=123&sort=date
+    </div>
+    
+    <div class="expected">
+      ✅ Expected Result: https://example.com/page?id=123&sort=date (unchanged)
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 4: Mixed Parameters</h2>
+    <p>Mixture of tracking and functional parameters. Only tracking should be removed.</p>
+    
+    <a href="https://shop.example.com/item?id=567&color=blue&ref=homepage&msclkid=abc123&gclid=xyz789">
+      Mixed Parameters Link
+    </a>
+    
+    <div class="url-display">
+      Original: https://shop.example.com/item?id=567&color=blue&ref=homepage&msclkid=abc123&gclid=xyz789
+    </div>
+    
+    <div class="expected">
+      ✅ Expected Result: https://shop.example.com/item?id=567&color=blue
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 5: URL Shortener (Redirect Test)</h2>
+    <p><strong>Note:</strong> This may fail due to CORS restrictions, which is expected behavior.</p>
+    
+    <a href="https://bit.ly/3PHZoQp">
+      Shortened URL (bit.ly)
+    </a>
+    
+    <div class="url-display">
+      Original: https://bit.ly/3PHZoQp (redirects to longer URL)
+    </div>
+    
+    <div class="expected">
+      ✅ Expected: Extension attempts to follow redirects<br>
+      ⚠️ May fail with CORS error (this is normal for some shorteners)
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 6: Special Links (Should Be Ignored)</h2>
+    <p>These special link types should be ignored by the extension.</p>
+    
+    <a href="mailto:test@example.com?subject=Hello">
+      Email Link (mailto:)
+    </a>
+    
+    <a href="tel:+1234567890">
+      Phone Link (tel:)
+    </a>
+    
+    <a href="javascript:alert('Hello')">
+      JavaScript Link
+    </a>
+    
+    <a href="#section">
+      Anchor Link (#)
+    </a>
+    
+    <div class="expected">
+      ✅ Expected: All should work normally without extension processing
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 7: New Tab Tests</h2>
+    <p>Try these methods to open links in new tabs:</p>
+    
+    <a href="https://example.com/?utm_source=test&page=about">
+      Test Link for New Tab
+    </a>
+    
+    <div class="expected">
+      ✅ Try: Ctrl+Click (Windows) or Cmd+Click (Mac)<br>
+      ✅ Try: Middle mouse button click<br>
+      ✅ Try: Right-click → "Open in new tab"
+    </div>
+  </div>
+
+  <div class="instructions" style="margin-top: 40px; background: #d4edda; border-color: #c3e6cb;">
+    <strong>Debugging Tips:</strong>
+    <ul>
+      <li><strong>View content script logs:</strong> Open DevTools (F12) on this page, check Console</li>
+      <li><strong>View background script logs:</strong> Go to brave://extensions/, click "service worker" under your extension</li>
+      <li><strong>Check statistics:</strong> Click the extension icon in the toolbar</li>
+      <li><strong>Force reload extension:</strong> Go to brave://extensions/, click reload icon on your extension</li>
+    </ul>
+  </div>
+
+  <script>
+    // Add click listeners to log original URLs
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        console.log('Link clicked:', link.href);
+      }, true); // Capture phase, before extension processes it
+    });
+    
+    console.log('Test page loaded. Extension should intercept link clicks.');
+  </script>
+</body>
+</html>

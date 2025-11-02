@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+    
+    h1 {
+      font-size: 18px;
+      margin: 0 0 16px 0;
+      color: #1a1a1a;
+    }
+    
+    .stats-container {
+      background: #f5f5f5;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .stat-row:last-child {
+      margin-bottom: 0;
+    }
+    
+    .stat-label {
+      color: #666;
+    }
+    
+    .stat-value {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    
+    .highlight {
+      color: #0066cc;
+    }
+    
+    .toggle-container {
+      margin-bottom: 12px;
+    }
+    
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    
+    .switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #ccc;
+      border-radius: 12px;
+      transition: background 0.3s;
+    }
+    
+    .switch.active {
+      background: #0066cc;
+    }
+    
+    .switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+    }
+    
+    .switch.active::after {
+      left: 22px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background: #0052a3;
+    }
+    
+    .version {
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛡️ Smart Link Cleaner</h1>
+  
+  <div class="stats-container">
+    <div class="stat-row">
+      <span class="stat-label">Links Processed:</span>
+      <span class="stat-value" id="totalProcessed">0</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Redirects Followed:</span>
+      <span class="stat-value highlight" id="totalRedirects">0</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Trackers Removed:</span>
+      <span class="stat-value highlight" id="totalCleaned">0</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">Avg. Processing:</span>
+      <span class="stat-value" id="avgTime">0ms</span>
+    </div>
+  </div>
+  
+  <div class="toggle-container">
+    <label class="toggle-label">
+      <span>Enable Extension</span>
+      <div class="switch active" id="enableToggle"></div>
+    </label>
+  </div>
+  
+  <button id="resetStats">Reset Statistics</button>
+  
+  <div class="version">v1.0.0 MVP</div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
