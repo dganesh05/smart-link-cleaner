@@ -11,7 +11,6 @@ A privacy-focused browser extension that automatically removes tracking paramete
 - [Usage](#usage)
 - [Testing](#testing)
 - [Known Limitations](#known-limitations)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 

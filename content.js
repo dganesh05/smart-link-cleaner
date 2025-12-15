@@ -7,8 +7,9 @@ document.addEventListener('click', async (event) => {
   // Find the closest <a> tag (in case user clicked on something inside a link)
   const link = event.target.closest('a');
   
+  // Not a link or no href
   if (!link || !link.href) {
-    return; // Not a link or no href
+    return; 
   }
   
   // Ignore special links
